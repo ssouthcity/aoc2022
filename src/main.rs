@@ -11,6 +11,8 @@ fn main() {
 
     let problem: Box<dyn Problem> = match day {
         1 => Box::new(solutions::CalorieCounting {}),
+        2 => Box::new(solutions::RockPaperScissors {}),
+        3 => Box::new(solutions::RucksackReorganization {}),
         _ => panic!("day is out of range, must be between 1 and 25"),
     };
 
@@ -18,5 +20,5 @@ fn main() {
         .expect("unable to read input file");
 
     println!("day {:0>2} a: {}", day, problem.a(input.clone()));
-    println!("day {:0>2} b: {}", day, problem.b(input.clone()));
+    println!("       b: {}", problem.b(input.clone()));
 }

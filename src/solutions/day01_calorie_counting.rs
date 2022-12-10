@@ -22,10 +22,7 @@ impl Problem for CalorieCounting {
         let calories = self.input_to_calories(input);
         let greatest_calories = calories.iter().max().expect("input was empty");
 
-        format!(
-            "the elf that carries the most calories is carrying {} kcal",
-            greatest_calories
-        )
+        greatest_calories.to_string()
     }
 
     fn b(&self, input: String) -> String {
@@ -34,9 +31,6 @@ impl Problem for CalorieCounting {
 
         let greatest_three_calories: i32 = calories.iter().rev().take(3).sum();
 
-        format!(
-            "the three elves carrying the most calories hold {} kcal in total",
-            greatest_three_calories
-        )
+        greatest_three_calories.to_string()
     }
 }

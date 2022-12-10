@@ -10,6 +10,10 @@ impl RuckSack {
     fn in_both_pockets(&self) -> u64 {
         self.0 & self.1
     }
+
+    fn combine_pockets(&self) -> u64 {
+        self.0 | self.1
+    }
 }
 
 impl FromStr for RuckSack {
@@ -38,28 +42,46 @@ impl FromStr for RuckSack {
 
 pub struct RucksackReorganization {}
 
-impl Problem for RucksackReorganization {
-    fn a(&self, input: String) -> String {
-        let rucksacks: Vec<RuckSack> = input
-            .lines()
-            .map(|l| l.parse::<RuckSack>().unwrap())
-            .collect();
-
+impl RucksackReorganization {
+    fn priority_score(&self, items: Vec<u64>) -> i32 {
         let mut score: i32 = 0;
 
-        for r in rucksacks {
-            let both = r.in_both_pockets();
+        for r in items {
             for i in 0..64 {
-                if (((both & (1 << i)) >> i) & 1) != 0 {
+                if (((r & (1 << i)) >> i) & 1) != 0 {
                     score += i + 1;
                 }
             }
         }
 
+        score
+    }
+}
+
+impl Problem for RucksackReorganization {
+    fn a(&self, input: String) -> String {
+        let rucksacks: Vec<RuckSack> = input.lines().map(|l| l.parse().unwrap()).collect();
+
+        let compartment_doubles: Vec<u64> = rucksacks.iter().map(|r| r.in_both_pockets()).collect();
+
+        let score = self.priority_score(compartment_doubles);
+
         score.to_string()
     }
 
-    fn b(&self, _input: String) -> String {
-        "".to_owned()
+    fn b(&self, input: String) -> String {
+        let rucksacks: Vec<RuckSack> = input.lines().map(|l| l.parse().unwrap()).collect();
+
+        let groups: Vec<u64> = rucksacks
+            .iter()
+            .map(|r| r.combine_pockets())
+            .collect::<Vec<u64>>()
+            .chunks(3)
+            .map(|s| s[0] & s[1] & s[2])
+            .collect();
+
+        let score = self.priority_score(groups);
+
+        score.to_string()
     }
 }

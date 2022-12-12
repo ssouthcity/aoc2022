@@ -1,6 +1,8 @@
 use std::str::FromStr;
 
-use crate::Problem;
+use problem::{print_solution, Problem};
+
+const INPUT: &'static str = include_str!("../input.txt");
 
 struct Pair(u128, u128);
 
@@ -58,4 +60,8 @@ impl Problem for CampCleaning {
 
         quantity.to_string()
     }
+}
+
+fn main() {
+    print_solution(CampCleaning {}, INPUT);
 }

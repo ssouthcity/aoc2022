@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use aoc22::Problem;
+use problem::{print_solution, Problem};
 
 #[derive(Debug)]
 struct Stacks(Vec<Vec<char>>);
@@ -69,8 +69,6 @@ impl Problem for SupplyStacks {
             .map(|l| l.parse::<Instruction>().unwrap())
             .collect();
 
-        println!("{:?}", commands);
-
         commands.iter().for_each(|c| {
             for _ in 0..c.quantity {
                 if let Some(s) = stacks.0[c.from].pop() {
@@ -82,7 +80,13 @@ impl Problem for SupplyStacks {
         stacks.0.iter().map(|s| s[0]).collect()
     }
 
-    fn b(&self, input: String) -> String {
+    fn b(&self, _input: String) -> String {
         "".to_owned()
     }
+}
+
+const INPUT: &'static str = include_str!("../input.txt");
+
+fn main() {
+    print_solution(SupplyStacks {}, INPUT);
 }

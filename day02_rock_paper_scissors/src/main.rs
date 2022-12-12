@@ -1,6 +1,8 @@
 use std::str::FromStr;
 
-use aoc22::Problem;
+use problem::Problem;
+
+const INPUT: &'static str = include_str!("../input.txt");
 
 #[derive(Copy, Clone, Debug)]
 enum Shape {
@@ -66,12 +68,29 @@ impl FromStr for MatchResult {
     }
 }
 
+// trait IndexPointable {
+//     fn index(&self) -> usize;
+//     fn points(&self) -> usize;
+// }
+
+// struct MatchNew {
+//     player: Box<dyn IndexPointable>,
+//     opponent: Box<dyn IndexPointable>,
+// }
+
+// impl MatchNew {
+//     fn score(&self, mut result_lookup: [Box<dyn IndexPointable>; 3]) -> usize {
+//         result_lookup.rotate_right(self.opponent.index());
+
+//         self.player.points() + result_lookup[self.player.index()].points()
+//     }
+// }
+
 struct Match(Shape, Shape);
 
 impl Match {
     fn score(&self) -> usize {
         let mut results = [MatchResult::Draw, MatchResult::Victory, MatchResult::Defeat];
-
         results.rotate_right(self.0.index());
 
         let result = results[self.1.index()];
@@ -95,7 +114,6 @@ struct PartialMatch(Shape, MatchResult);
 impl PartialMatch {
     fn score(&self) -> usize {
         let mut results = [Shape::Rock, Shape::Paper, Shape::Scissors];
-
         results.rotate_left(self.0.index());
 
         let result = results[self.1.index()];
@@ -118,21 +136,22 @@ pub struct RockPaperScissors;
 
 impl Problem for RockPaperScissors {
     fn a(&self, input: String) -> String {
-        let matches: Vec<Match> = input.lines().map(|l| l.parse::<Match>().unwrap()).collect();
+        let matches: Vec<Match> = input.lines().map(|l| l.parse().unwrap()).collect();
 
-        let score = matches.iter().map(|m| m.score()).sum::<usize>();
+        let score: usize = matches.iter().map(|m| m.score()).sum();
 
         score.to_string()
     }
 
     fn b(&self, input: String) -> String {
-        let matches: Vec<PartialMatch> = input
-            .lines()
-            .map(|l| l.parse::<PartialMatch>().unwrap())
-            .collect();
+        let matches: Vec<PartialMatch> = input.lines().map(|l| l.parse().unwrap()).collect();
 
-        let score = matches.iter().map(|m| m.score()).sum::<usize>();
+        let score: usize = matches.iter().map(|m| m.score()).sum();
 
         score.to_string()
     }
+}
+
+fn main() {
+    problem::print_solution(RockPaperScissors {}, INPUT);
 }

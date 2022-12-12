@@ -1,7 +1,8 @@
 use std::str::FromStr;
 
-use aoc22::Problem;
+use problem::Problem;
 
+const INPUT: &'static str = include_str!("../input.txt");
 const ALPHABET: &'static str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 struct RuckSack(u64, u64); // we need at least 52 bits
@@ -84,4 +85,8 @@ impl Problem for RucksackReorganization {
 
         score.to_string()
     }
+}
+
+fn main() {
+    problem::print_solution(RucksackReorganization {}, INPUT);
 }

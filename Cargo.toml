@@ -1,9 +1,9 @@
-[package]
-name = "aoc22"
-version = "0.1.0"
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-lazy_static = "1.4.0"
+[workspace]
+members = [
+    "day01_calorie_counting",
+    "day02_rock_paper_scissors",
+    "day03_rucksack_reorganization",
+    "day04_camp_cleaning",
+    "day05_supply_stacks",
+    "problem"
+]

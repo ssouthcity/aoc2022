@@ -1,4 +1,6 @@
-use aoc22::Problem;
+use problem::Problem;
+
+const INPUT: &'static str = include_str!("../input.txt");
 
 pub struct CalorieCounting;
 
@@ -6,11 +8,10 @@ impl CalorieCounting {
     fn input_to_calories(&self, input: String) -> Vec<i32> {
         return input
             .split("\n\n")
-            .map(|col| {
-                col.lines()
+            .map(|block| {
+                block
+                    .lines()
                     .map(|l| l.parse::<i32>().unwrap())
-                    .collect::<Vec<i32>>()
-                    .iter()
                     .sum::<i32>()
             })
             .collect();
@@ -33,4 +34,8 @@ impl Problem for CalorieCounting {
 
         greatest_three_calories.to_string()
     }
+}
+
+fn main() {
+    problem::print_solution(CalorieCounting {}, INPUT);
 }

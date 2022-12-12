@@ -14,6 +14,7 @@ fn main() {
         2 => Box::new(solutions::RockPaperScissors {}),
         3 => Box::new(solutions::RucksackReorganization {}),
         4 => Box::new(solutions::CampCleaning {}),
+        5 => Box::new(solutions::SupplyStacks {}),
         _ => panic!("day is out of range, must be between 1 and 25"),
     };
 

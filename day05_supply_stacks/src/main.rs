@@ -22,9 +22,10 @@ impl FromStr for Stacks {
 
             for j in 1..lines.len() {
                 if let Some(c) = lines[j].chars().nth(i) {
-                    if c != ' ' {
-                        inner.push(c);
+                    if c == ' ' {
+                        continue;
                     }
+                    inner.push(c);
                 }
             }
 
@@ -63,26 +64,35 @@ impl Problem for SupplyStacks {
     fn a(&self, input: String) -> String {
         let (schema, instructions) = input.split_once("\n\n").unwrap();
 
-        let mut stacks = schema.parse::<Stacks>().unwrap();
+        let mut stacks: Stacks = schema.parse().unwrap();
 
-        let commands: Vec<Instruction> = instructions
-            .lines()
-            .map(|l| l.parse::<Instruction>().unwrap())
-            .collect();
+        let commands: Vec<Instruction> = instructions.lines().map(|l| l.parse().unwrap()).collect();
 
-        commands.iter().for_each(|c| {
+        for c in commands {
             for _ in 0..c.quantity {
                 if let Some(s) = stacks.0[c.from].pop() {
                     stacks.0[c.to].push(s);
                 }
             }
-        });
+        }
 
-        stacks.0.iter().map(|s| s[0]).collect()
+        stacks.0.iter().map(|s| s.last().unwrap()).collect()
     }
 
-    fn b(&self, _input: String) -> String {
-        "".to_owned()
+    fn b(&self, input: String) -> String {
+        let (schema, instructions) = input.split_once("\n\n").unwrap();
+
+        let mut stacks: Stacks = schema.parse().unwrap();
+
+        let commands: Vec<Instruction> = instructions.lines().map(|l| l.parse().unwrap()).collect();
+
+        for c in commands {
+            let from = &mut stacks.0[c.from];
+            let mut lifted = from.split_off(from.len() - c.quantity);
+            stacks.0[c.to].append(&mut lifted);
+        }
+
+        stacks.0.iter().map(|s| s.last().unwrap()).collect()
     }
 }
 

@@ -47,6 +47,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "day06_tuning_trouble"
+version = "0.1.0"
+dependencies = [
+ "problem",
+]
+
+[[package]]
 name = "problem"
 version = "0.1.0"
 dependencies = [

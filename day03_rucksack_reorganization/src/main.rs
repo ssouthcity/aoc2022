@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use problem::Problem;
+use problem::{print_solution, Problem};
 
 const INPUT: &'static str = include_str!("../input.txt");
 const ALPHABET: &'static str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -41,6 +41,7 @@ impl FromStr for RuckSack {
     }
 }
 
+#[derive(Debug)]
 pub struct RucksackReorganization {}
 
 impl RucksackReorganization {
@@ -88,5 +89,5 @@ impl Problem for RucksackReorganization {
 }
 
 fn main() {
-    problem::print_solution(RucksackReorganization {}, INPUT);
+    print_solution(RucksackReorganization {}, INPUT);
 }

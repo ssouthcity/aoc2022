@@ -56,6 +56,7 @@ impl FromStr for Instruction {
     }
 }
 
+#[derive(Debug)]
 pub struct SupplyStacks {}
 
 impl Problem for SupplyStacks {

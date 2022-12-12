@@ -42,6 +42,7 @@ impl FromStr for Pair {
     }
 }
 
+#[derive(Debug)]
 pub struct CampCleaning;
 
 impl Problem for CampCleaning {

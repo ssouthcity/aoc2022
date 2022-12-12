@@ -1,7 +1,8 @@
-use problem::Problem;
+use problem::{print_solution, Problem};
 
 const INPUT: &'static str = include_str!("../input.txt");
 
+#[derive(Debug)]
 pub struct CalorieCounting;
 
 impl CalorieCounting {
@@ -37,5 +38,5 @@ impl Problem for CalorieCounting {
 }
 
 fn main() {
-    problem::print_solution(CalorieCounting {}, INPUT);
+    print_solution(CalorieCounting {}, INPUT);
 }

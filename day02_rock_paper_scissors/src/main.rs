@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use problem::Problem;
+use problem::{print_solution, Problem};
 
 const INPUT: &'static str = include_str!("../input.txt");
 
@@ -132,6 +132,7 @@ impl FromStr for PartialMatch {
     }
 }
 
+#[derive(Debug)]
 pub struct RockPaperScissors;
 
 impl Problem for RockPaperScissors {
@@ -153,5 +154,5 @@ impl Problem for RockPaperScissors {
 }
 
 fn main() {
-    problem::print_solution(RockPaperScissors {}, INPUT);
+    print_solution(RockPaperScissors {}, INPUT);
 }

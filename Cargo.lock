@@ -54,6 +54,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "day07_no_space_left_on_device"
+version = "0.1.0"
+dependencies = [
+ "problem",
+]
+
+[[package]]
 name = "problem"
 version = "0.1.0"
 dependencies = [

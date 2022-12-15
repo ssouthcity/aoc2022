@@ -7,5 +7,6 @@ members = [
     "day05_supply_stacks",
     "day06_tuning_trouble",
     "day07_no_space_left_on_device",
+    "day14_regolith_reservoir",
     "problem"
 ]

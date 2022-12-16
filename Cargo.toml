@@ -8,5 +8,6 @@ members = [
     "day06_tuning_trouble",
     "day07_no_space_left_on_device",
     "day14_regolith_reservoir",
+    "day15_beacon_exclusion_zone",
     "problem"
 ]

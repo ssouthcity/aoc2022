@@ -61,6 +61,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "day09_rope_bridge"
+version = "0.1.0"
+
+[[package]]
 name = "day14_regolith_reservoir"
 version = "0.1.0"
 dependencies = [

@@ -69,6 +69,10 @@ name = "day10_cathode_ray_tube"
 version = "0.1.0"
 
 [[package]]
+name = "day11_monkey_in_the_middle"
+version = "0.1.0"
+
+[[package]]
 name = "day14_regolith_reservoir"
 version = "0.1.0"
 dependencies = [

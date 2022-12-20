@@ -9,6 +9,7 @@ members = [
     "day07_no_space_left_on_device",
     "day09_rope_bridge",
     "day10_cathode_ray_tube",
+    "day11_monkey_in_the_middle",
     "day14_regolith_reservoir",
     "day15_beacon_exclusion_zone",
     "problem"

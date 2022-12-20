@@ -8,6 +8,7 @@ members = [
     "day06_tuning_trouble",
     "day07_no_space_left_on_device",
     "day09_rope_bridge",
+    "day10_cathode_ray_tube",
     "day14_regolith_reservoir",
     "day15_beacon_exclusion_zone",
     "problem"

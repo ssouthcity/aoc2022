@@ -1,8 +1,8 @@
 use std::str::FromStr;
 
-use aoc22::Problem;
+use aoc2022::day;
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone)]
 enum Shape {
     Rock,
     Paper,
@@ -32,7 +32,7 @@ impl FromStr for Shape {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
 enum MatchResult {
     Draw,
     Victory,
@@ -71,7 +71,6 @@ struct Match(Shape, Shape);
 impl Match {
     fn score(&self) -> usize {
         let mut results = [MatchResult::Draw, MatchResult::Victory, MatchResult::Defeat];
-
         results.rotate_right(self.0.index());
 
         let result = results[self.1.index()];
@@ -95,7 +94,6 @@ struct PartialMatch(Shape, MatchResult);
 impl PartialMatch {
     fn score(&self) -> usize {
         let mut results = [Shape::Rock, Shape::Paper, Shape::Scissors];
-
         results.rotate_left(self.0.index());
 
         let result = results[self.1.index()];
@@ -114,25 +112,24 @@ impl FromStr for PartialMatch {
     }
 }
 
-pub struct RockPaperScissors;
-
-impl Problem for RockPaperScissors {
-    fn a(&self, input: String) -> String {
-        let matches: Vec<Match> = input.lines().map(|l| l.parse::<Match>().unwrap()).collect();
-
-        let score = matches.iter().map(|m| m.score()).sum::<usize>();
-
-        score.to_string()
-    }
-
-    fn b(&self, input: String) -> String {
-        let matches: Vec<PartialMatch> = input
-            .lines()
-            .map(|l| l.parse::<PartialMatch>().unwrap())
-            .collect();
-
-        let score = matches.iter().map(|m| m.score()).sum::<usize>();
-
-        score.to_string()
-    }
+fn parse_matches(input: &str) -> Vec<Match> {
+    input.lines().map(|l| l.parse().unwrap()).collect()
 }
+
+fn parse_partial_matches(input: &str) -> Vec<PartialMatch> {
+    input.lines().map(|l| l.parse().unwrap()).collect()
+}
+
+fn one(matches: Vec<Match>) -> usize {
+    matches.iter().map(|m| m.score()).sum()
+}
+
+fn two(matches: Vec<PartialMatch>) -> usize {
+    matches.iter().map(|m| m.score()).sum()
+}
+
+day!(
+    "Rock Paper Scissors",
+    one << parse_matches,
+    two << parse_partial_matches
+);

@@ -4,62 +4,12 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        // {
-        //     "type": "lldb",
-        //     "request": "launch",
-        //     "name": "Debug unit tests in library 'aoc22'",
-        //     "cargo": {
-        //         "args": [
-        //             "test",
-        //             "--no-run",
-        //             "--lib",
-        //             "--package=aoc22"
-        //         ],
-        //         "filter": {
-        //             "name": "aoc22",
-        //             "kind": "lib"
-        //         }
-        //     },
-        //     "args": [],
-        //     "cwd": "${workspaceFolder}"
-        // },
-        // {
-        //     "type": "lldb",
-        //     "request": "launch",
-        //     "name": "Debug executable 'aoc22'",
-        //     "cargo": {
-        //         "args": [
-        //             "build",
-        //             "--bin=aoc22",
-        //             "--package=aoc22"
-        //         ],
-        //         "filter": {
-        //             "name": "aoc22",
-        //             "kind": "bin"
-        //         }
-        //     },
-        //     "args": [],
-        //     "cwd": "${workspaceFolder}"
-        // },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'aoc22'",
-            "cargo": {
-                "args": [
-                    "test",
-                    "--no-run",
-                    "--bin=aoc22",
-                    "--package=aoc22"
-                ],
-                "filter": {
-                    "name": "aoc22",
-                    "kind": "bin"
-                }
-            },
-            "args": [
-                "2"
-            ],
+            "name": "Debug",
+            "program": "${workspaceFolder}/<executable file>",
+            "args": [],
             "cwd": "${workspaceFolder}"
         }
     ]

@@ -1,6 +1,6 @@
-use std::str::FromStr;
+use aoc2022::day;
 
-use crate::Problem;
+use std::str::FromStr;
 
 struct Pair(u128, u128);
 
@@ -40,22 +40,16 @@ impl FromStr for Pair {
     }
 }
 
-pub struct CampCleaning;
-
-impl Problem for CampCleaning {
-    fn a(&self, input: String) -> String {
-        let pairs: Vec<Pair> = input.lines().map(|l| l.parse().unwrap()).collect();
-
-        let quantity: i32 = pairs.iter().map(|p| p.is_covered() as i32).sum();
-
-        quantity.to_string()
-    }
-
-    fn b(&self, input: String) -> String {
-        let pairs: Vec<Pair> = input.lines().map(|l| l.parse().unwrap()).collect();
-
-        let quantity: i32 = pairs.iter().map(|p| p.is_overlapping() as i32).sum();
-
-        quantity.to_string()
-    }
+fn parse_pair(input: &str) -> Vec<Pair> {
+    input.lines().map(|l| l.parse().unwrap()).collect()
 }
+
+fn one(pairs: Vec<Pair>) -> i32 {
+    pairs.iter().map(|p| p.is_covered() as i32).sum()
+}
+
+fn two(pairs: Vec<Pair>) -> i32 {
+    pairs.iter().map(|p| p.is_overlapping() as i32).sum()
+}
+
+day!("Camp Cleanup", one << parse_pair, two << parse_pair);

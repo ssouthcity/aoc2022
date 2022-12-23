@@ -1,16 +1,8 @@
-[workspace]
-members = [
-    "day01_calorie_counting",
-    "day02_rock_paper_scissors",
-    "day03_rucksack_reorganization",
-    "day04_camp_cleaning",
-    "day05_supply_stacks",
-    "day06_tuning_trouble",
-    "day07_no_space_left_on_device",
-    "day09_rope_bridge",
-    "day10_cathode_ray_tube",
-    "day11_monkey_in_the_middle",
-    "day14_regolith_reservoir",
-    "day15_beacon_exclusion_zone",
-    "problem"
-]
+
+[package]
+name = "aoc2022"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+itertools = "0.10.5"

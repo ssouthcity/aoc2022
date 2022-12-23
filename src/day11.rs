@@ -1,25 +1,6 @@
-use std::{collections::VecDeque, fmt::Display, str::FromStr};
+use std::{collections::VecDeque, str::FromStr};
 
-trait Problem<T, O: Display> {
-    fn parse_input(&self, input: &str) -> T;
-    fn a(&self, parsed_input: T) -> O;
-    fn b(&self, parsed_input: T) -> O;
-}
-
-fn solve_and_display<T, O: Display>(
-    title: &'static str,
-    input: &'static str,
-    problem: impl Problem<T, O>,
-) {
-    let a = problem.a(problem.parse_input(input));
-    let b = problem.a(problem.parse_input(input));
-
-    println!("{}", "-".repeat(title.len()));
-    println!("{}", title);
-    println!("a: {:>width$}", a, width = title.len() - 3);
-    println!("b: {:>width$}", b, width = title.len() - 3);
-    println!("{}", "-".repeat(title.len()));
-}
+use aoc2022::day;
 
 type Item = i32;
 
@@ -113,12 +94,11 @@ impl FromStr for Monkey {
     }
 }
 
-fn main() {
-    let mut monkeys: Vec<Monkey> = include_str!("../input.txt")
-        .split("\n\n")
-        .map(|s| s.parse().unwrap())
-        .collect();
+fn parse_monkeys(input: &str) -> Vec<Monkey> {
+    input.split("\n\n").map(|s| s.parse().unwrap()).collect()
+}
 
+fn one(mut monkeys: Vec<Monkey>) -> i32 {
     for _ in 0..20 {
         for i in 0..monkeys.len() {
             while let Some(item) = monkeys[i].items.pop_front() {
@@ -134,7 +114,10 @@ fn main() {
             }
         }
     }
+
     monkeys.sort_by(|a, b| b.business.cmp(&a.business));
 
-    println!("{}", (monkeys[0].business * monkeys[1].business))
+    monkeys[0].business * monkeys[1].business
 }
+
+day!("Monkey in the Middle", one << parse_monkeys);

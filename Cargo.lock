@@ -3,86 +3,11 @@
 version = 3
 
 [[package]]
-name = "convert_case"
-version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec182b0ca2f35d8fc196cf3404988fd8b8c739a4d270ff118a398feb0cbec1ca"
-dependencies = [
- "unicode-segmentation",
-]
-
-[[package]]
-name = "day01_calorie_counting"
-version = "0.1.0"
-dependencies = [
- "problem",
-]
-
-[[package]]
-name = "day02_rock_paper_scissors"
-version = "0.1.0"
-dependencies = [
- "problem",
-]
-
-[[package]]
-name = "day03_rucksack_reorganization"
-version = "0.1.0"
-dependencies = [
- "problem",
-]
-
-[[package]]
-name = "day04_camp_cleaning"
-version = "0.1.0"
-dependencies = [
- "problem",
-]
-
-[[package]]
-name = "day05_supply_stacks"
-version = "0.1.0"
-dependencies = [
- "problem",
-]
-
-[[package]]
-name = "day06_tuning_trouble"
-version = "0.1.0"
-dependencies = [
- "problem",
-]
-
-[[package]]
-name = "day07_no_space_left_on_device"
-version = "0.1.0"
-dependencies = [
- "problem",
-]
-
-[[package]]
-name = "day09_rope_bridge"
-version = "0.1.0"
-
-[[package]]
-name = "day10_cathode_ray_tube"
-version = "0.1.0"
-
-[[package]]
-name = "day11_monkey_in_the_middle"
-version = "0.1.0"
-
-[[package]]
-name = "day14_regolith_reservoir"
+name = "aoc2022"
 version = "0.1.0"
 dependencies = [
  "itertools",
- "problem",
 ]
-
-[[package]]
-name = "day15_beacon_exclusion_zone"
-version = "0.1.0"
 
 [[package]]
 name = "either"
@@ -98,16 +23,3 @@ checksum = "b0fd2260e829bddf4cb6ea802289de2f86d6a7a690192fbe91b3f46e0f2c8473"
 dependencies = [
  "either",
 ]
-
-[[package]]
-name = "problem"
-version = "0.1.0"
-dependencies = [
- "convert_case",
-]
-
-[[package]]
-name = "unicode-segmentation"
-version = "1.10.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0fdbf052a0783de01e944a6ce7a8cb939e295b1e7be835a1112c3b9a7f047a5a"

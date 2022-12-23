@@ -1,17 +1,6 @@
 use std::{collections::HashSet, str::FromStr};
 
-trait Problem {
-    fn a(&self) -> String;
-    fn b(&self) -> String;
-}
-
-fn print_solution(title: &'static str, problem: impl Problem) {
-    println!("{}", "-".repeat(title.len()));
-    println!("{}", title);
-    println!("a: {:>width$}", problem.a(), width = title.len() - 3);
-    println!("a: {:>width$}", problem.b(), width = title.len() - 3);
-    println!("{}", "-".repeat(title.len()));
-}
+use aoc2022::day;
 
 #[derive(Clone, Copy)]
 enum Direction {
@@ -97,67 +86,52 @@ impl Rope {
     }
 }
 
-struct RopeBridge {
-    routine: Vec<(Direction, u8)>,
+fn parse_routine(input: &str) -> Vec<(Direction, u8)> {
+    input
+        .lines()
+        .map(|l| l.split_once(' ').unwrap())
+        .map(|(a, b)| (a.parse().unwrap(), b.parse().unwrap()))
+        .collect()
 }
 
-impl Problem for RopeBridge {
-    fn a(&self) -> String {
-        let mut head = Point(0, 0);
-        let mut tail = Point(0, 0);
-        let mut visited: HashSet<Point> = HashSet::new();
+fn one(routine: Vec<(Direction, u8)>) -> usize {
+    let mut head = Point(0, 0);
+    let mut tail = Point(0, 0);
+    let mut visited: HashSet<Point> = HashSet::new();
 
-        visited.insert(tail);
+    visited.insert(tail);
 
-        for (d, n) in &self.routine {
-            for _ in 0..*n {
-                let new_head = head.step(*d);
+    for (d, n) in routine {
+        for _ in 0..n {
+            let new_head = head.step(d);
 
-                if new_head.distant(&tail) {
-                    tail = head;
-                    visited.insert(tail);
-                }
+            if new_head.distant(&tail) {
+                tail = head;
+                visited.insert(tail);
+            }
 
-                head = new_head;
+            head = new_head;
+        }
+    }
+
+    visited.len()
+}
+
+fn two(routine: Vec<(Direction, u8)>) -> usize {
+    let mut rope = Rope::new(10);
+    let mut visited: HashSet<Point> = HashSet::new();
+
+    for (d, n) in routine.iter() {
+        for _ in 0..n.clone() {
+            rope.step(d.clone());
+
+            if let Some(tail) = rope.knots.last() {
+                visited.insert(tail.clone());
             }
         }
-
-        visited.len().to_string()
     }
 
-    fn b(&self) -> String {
-        let mut rope = Rope::new(10);
-        let mut visited: HashSet<Point> = HashSet::new();
-
-        for (d, n) in self.routine.iter() {
-            for _ in 0..n.clone() {
-                rope.step(d.clone());
-
-                if let Some(tail) = rope.knots.last() {
-                    visited.insert(tail.clone());
-                }
-            }
-        }
-
-        visited.len().to_string()
-    }
+    visited.len()
 }
 
-impl FromStr for RopeBridge {
-    type Err = &'static str;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let routine: Vec<(Direction, u8)> = s
-            .lines()
-            .map(|l| l.split_once(' ').unwrap())
-            .map(|(a, b)| (a.parse().unwrap(), b.parse().unwrap()))
-            .collect();
-
-        Ok(Self { routine })
-    }
-}
-
-fn main() {
-    let problem: RopeBridge = include_str!("../input.txt").parse().unwrap();
-    print_solution("Rope Bridge", problem);
-}
+day!("Rope Bridge", one << parse_routine, two << parse_routine);

@@ -1,10 +1,8 @@
 use std::str::FromStr;
 
-use problem::{print_solution, Problem};
+use aoc2022::day;
 
-const INPUT: &'static str = include_str!("../input.txt");
-
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone)]
 enum Shape {
     Rock,
     Paper,
@@ -34,7 +32,7 @@ impl FromStr for Shape {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
 enum MatchResult {
     Draw,
     Victory,
@@ -67,24 +65,6 @@ impl FromStr for MatchResult {
         }
     }
 }
-
-// trait IndexPointable {
-//     fn index(&self) -> usize;
-//     fn points(&self) -> usize;
-// }
-
-// struct MatchNew {
-//     player: Box<dyn IndexPointable>,
-//     opponent: Box<dyn IndexPointable>,
-// }
-
-// impl MatchNew {
-//     fn score(&self, mut result_lookup: [Box<dyn IndexPointable>; 3]) -> usize {
-//         result_lookup.rotate_right(self.opponent.index());
-
-//         self.player.points() + result_lookup[self.player.index()].points()
-//     }
-// }
 
 struct Match(Shape, Shape);
 
@@ -132,27 +112,24 @@ impl FromStr for PartialMatch {
     }
 }
 
-#[derive(Debug)]
-pub struct RockPaperScissors;
-
-impl Problem for RockPaperScissors {
-    fn a(&self, input: String) -> String {
-        let matches: Vec<Match> = input.lines().map(|l| l.parse().unwrap()).collect();
-
-        let score: usize = matches.iter().map(|m| m.score()).sum();
-
-        score.to_string()
-    }
-
-    fn b(&self, input: String) -> String {
-        let matches: Vec<PartialMatch> = input.lines().map(|l| l.parse().unwrap()).collect();
-
-        let score: usize = matches.iter().map(|m| m.score()).sum();
-
-        score.to_string()
-    }
+fn parse_matches(input: &str) -> Vec<Match> {
+    input.lines().map(|l| l.parse().unwrap()).collect()
 }
 
-fn main() {
-    print_solution(RockPaperScissors {}, INPUT);
+fn parse_partial_matches(input: &str) -> Vec<PartialMatch> {
+    input.lines().map(|l| l.parse().unwrap()).collect()
 }
+
+fn one(matches: Vec<Match>) -> usize {
+    matches.iter().map(|m| m.score()).sum()
+}
+
+fn two(matches: Vec<PartialMatch>) -> usize {
+    matches.iter().map(|m| m.score()).sum()
+}
+
+day!(
+    "Rock Paper Scissors",
+    one << parse_matches,
+    two << parse_partial_matches
+);

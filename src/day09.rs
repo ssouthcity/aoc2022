@@ -1,6 +1,6 @@
 use std::{collections::HashSet, str::FromStr};
 
-use aoc2022::day;
+use aoc_macros::day;
 
 #[derive(Clone, Copy)]
 enum Direction {

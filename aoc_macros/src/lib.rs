@@ -24,7 +24,7 @@ macro_rules! day {
         const CONTENT_WIDTH: usize = 40;
 
         pub(crate) fn execute(input: &str) {
-            use aoc2022::day_part;
+            use aoc_macros::day_part;
 
             let mut results = vec![];
 

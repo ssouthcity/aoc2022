@@ -1,7 +1,7 @@
 use std::{collections::VecDeque, str::FromStr};
 use std::{fs, str};
 
-use aoc2022::day;
+use aoc_macros::day;
 
 #[derive(Debug)]
 enum Instruction {

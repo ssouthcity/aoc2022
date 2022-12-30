@@ -1,27 +1,19 @@
+use std::collections::HashSet;
 use std::str::FromStr;
 
-use aoc2022::day;
+use aoc_macros::day;
 
 const ALPHABET: &'static str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 struct RuckSack(u64, u64); // we need at least 52 bits
 
-impl RuckSack {
-    fn in_both_pockets(&self) -> u64 {
-        self.0 & self.1
-    }
-
-    fn combine_pockets(&self) -> u64 {
-        self.0 | self.1
-    }
-}
-
 impl FromStr for RuckSack {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let mut left: Vec<char> = s.chars().collect();
-        let right: Vec<char> = left.split_off(left.len() / 2);
+        let mut chars = s.as_bytes();
+        // let left: HashSet<char> = chars.chunks(chars.len() / 2).collect();
+        // let right: HashSet<char> = chars.chunks(chars.len() / 2).collect();
 
         let mut a: u64 = 0;
         let mut b: u64 = 0;
@@ -59,7 +51,7 @@ fn parse_rucksacks(input: &str) -> Vec<RuckSack> {
 }
 
 fn one(rucksacks: Vec<RuckSack>) -> i32 {
-    let compartment_doubles: Vec<u64> = rucksacks.iter().map(|r| r.in_both_pockets()).collect();
+    let compartment_doubles: Vec<u64> = rucksacks.iter().map(|r| r.0 & r.1).collect();
 
     priority_score(compartment_doubles)
 }
@@ -67,7 +59,7 @@ fn one(rucksacks: Vec<RuckSack>) -> i32 {
 fn two(rucksacks: Vec<RuckSack>) -> i32 {
     let groups: Vec<u64> = rucksacks
         .iter()
-        .map(|r| r.combine_pockets())
+        .map(|r| r.0 | r.1)
         .collect::<Vec<u64>>()
         .chunks(3)
         .map(|s| s[0] & s[1] & s[2])

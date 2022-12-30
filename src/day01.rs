@@ -1,4 +1,4 @@
-use aoc2022::day;
+use aoc_macros::day;
 
 fn parse_calories(input: &str) -> Vec<i32> {
     input

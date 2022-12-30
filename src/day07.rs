@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use aoc2022::day;
+use aoc_macros::day;
 
 day!("No Space Left on Device", one << parse_terminal_log);
 

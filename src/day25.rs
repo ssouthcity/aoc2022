@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use aoc2022::day;
+use aoc_macros::day;
 
 struct SnafuNumber(i64);
 

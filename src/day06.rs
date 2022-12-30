@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-use aoc2022::day;
+use aoc_macros::day;
 
 fn find_distinct_window(input: Vec<char>, size: usize) -> usize {
     for (i, snap) in input.windows(size).enumerate() {

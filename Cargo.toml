@@ -6,3 +6,7 @@ edition = "2021"
 
 [dependencies]
 itertools = "0.10.5"
+aoc_macros = { path = "aoc_macros" }
+
+[workspaces]
+members = ["aoc_macros"]

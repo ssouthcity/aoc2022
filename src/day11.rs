@@ -1,6 +1,6 @@
 use std::{collections::VecDeque, str::FromStr};
 
-use aoc2022::day;
+use aoc_macros::day;
 
 type Item = i32;
 

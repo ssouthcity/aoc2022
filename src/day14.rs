@@ -1,4 +1,4 @@
-use aoc2022::day;
+use aoc_macros::day;
 use itertools::Either;
 use std::{collections::HashSet, str::FromStr};
 

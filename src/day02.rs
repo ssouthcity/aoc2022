@@ -1,4 +1,4 @@
-use aoc2022::day;
+use aoc_macros::day;
 
 fn parse_rps(input: &str) -> Vec<(usize, usize)> {
     input
@@ -45,8 +45,4 @@ fn two(matches: Vec<(usize, usize)>) -> usize {
     sum
 }
 
-day!(
-    "Rock Paper Scissors",
-    one << parse_rps,
-    two << parse_rps // two << parse_partial_matches
-);
+day!("Rock Paper Scissors", one << parse_rps, two << parse_rps);

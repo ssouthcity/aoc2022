@@ -1,3 +1,4 @@
+#![feature(macro_metavar_expr)]
 #![feature(array_windows)]
 use aoc2022::generate_main;
 

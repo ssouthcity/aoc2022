@@ -1,3 +1,5 @@
+#![feature(macro_metavar_expr)]
+
 #[macro_export]
 macro_rules! day_part {
     ($input:expr, $output:expr, $solver:ident, $parser:ident) => {
@@ -5,7 +7,13 @@ macro_rules! day_part {
         day_part!(parsed_input, $output, $solver);
     };
     ($input:expr, $output:expr, $solver:ident) => {
-        *$output = Some($solver($input));
+        use std::time::Instant;
+
+        let now = Instant::now();
+        let solution = $solver($input);
+        let elapsed = now.elapsed();
+
+        *$output = Some((solution, elapsed));
     };
 }
 
@@ -13,24 +21,29 @@ macro_rules! day_part {
 macro_rules! day {
     ($name:expr, $($solver:ident$( << $parser:ident)?),*) => {
         const PART_NAMES: [&'static str; 2] = ["one", "two"];
-        const CONTENT_WIDTH: usize = 30;
+        const CONTENT_WIDTH: usize = 40;
 
         pub(crate) fn execute(input: &str) {
             use aoc2022::day_part;
 
-
-            println!("┌─{}─┐", "─".repeat(CONTENT_WIDTH));
-            println!("│ {:<width$} │", $name, width = CONTENT_WIDTH);
-
-            let mut names = PART_NAMES.iter();
+            let mut results = vec![];
 
             $({
                 let mut result = None;
                 day_part!(input, &mut result, $solver$(, $parser)?);
-                let part_name = names.next().unwrap();
-                println!("│ {}: {:>width$} │", part_name, result.unwrap(), width = CONTENT_WIDTH - part_name.len() - 2);
+
+                if let Some((solution, delta)) = result {
+                    results.push((format!("{}", solution), delta));
+                }
             })*
 
+            println!("┌─{}─┐", "─".repeat(CONTENT_WIDTH));
+            println!("│ {:<width$} │", $name, width = CONTENT_WIDTH);
+            for (i, (solution, duration)) in results.iter().enumerate() {
+                let intro = format!("{} ({}):", PART_NAMES[i], duration.as_micros());
+                let remaining_width = CONTENT_WIDTH - intro.len() - 1;
+                println!("│ {} {:>width$} │", intro, solution, width = remaining_width);
+            }
             println!("└─{}─┘", "─".repeat(CONTENT_WIDTH));
         }
     };
@@ -39,18 +52,35 @@ macro_rules! day {
 #[macro_export]
 macro_rules! generate_main {
     ($($mod_name:ident),*) => {
+        use std::{env, fs};
+
         $(
             mod $mod_name;
         )*
 
-        fn main() {
-            use std::fs;
+        type Solution = (&'static str, for<'r> fn(&'r str));
 
-            $(
-                let path = format!("./input/{}.txt", stringify!($mod_name));
-                let input = fs::read_to_string(path).unwrap();
-                $mod_name::execute(input.as_str());
-            )*
+        const SOLUTIONS: [Solution; ${count(mod_name, 0)}] = [
+            $((stringify!($mod_name), $mod_name::execute), )*
+        ];
+
+        fn run_and_print((name, exec): Solution) {
+            let path = format!("./input/{}.txt", name);
+            let input = fs::read_to_string(path).unwrap();
+            exec(input.as_str());
+        }
+
+        fn main() {
+            let args: Vec<usize> = env::args()
+                .skip(1)
+                .map(|a| a.parse().unwrap())
+                .collect();
+
+            SOLUTIONS
+                .iter()
+                .enumerate()
+                .filter(|(i, solution)| args.is_empty() || args.contains(&(i + 1)))
+                .for_each(|(_, solution)| run_and_print(*solution));
         }
     };
 }

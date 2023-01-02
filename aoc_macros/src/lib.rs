@@ -50,10 +50,8 @@ macro_rules! day {
 }
 
 #[macro_export]
-macro_rules! generate_main {
+macro_rules! generate_solution_array {
     ($($mod_name:ident),*) => {
-        use std::{env, fs};
-
         $(
             mod $mod_name;
         )*
@@ -63,24 +61,5 @@ macro_rules! generate_main {
         const SOLUTIONS: [Solution; ${count(mod_name, 0)}] = [
             $((stringify!($mod_name), $mod_name::execute), )*
         ];
-
-        fn run_and_print((name, exec): Solution) {
-            let path = format!("./input/{}.txt", name);
-            let input = fs::read_to_string(path).unwrap();
-            exec(input.as_str());
-        }
-
-        fn main() {
-            let args: Vec<usize> = env::args()
-                .skip(1)
-                .map(|a| a.parse().unwrap())
-                .collect();
-
-            SOLUTIONS
-                .iter()
-                .enumerate()
-                .filter(|(i, solution)| args.is_empty() || args.contains(&(i + 1)))
-                .for_each(|(_, solution)| run_and_print(*solution));
-        }
     };
 }

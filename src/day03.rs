@@ -1,4 +1,3 @@
-use std::collections::HashSet;
 use std::str::FromStr;
 
 use aoc_macros::day;
@@ -11,24 +10,18 @@ impl FromStr for RuckSack {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let mut chars = s.as_bytes();
-        // let left: HashSet<char> = chars.chunks(chars.len() / 2).collect();
-        // let right: HashSet<char> = chars.chunks(chars.len() / 2).collect();
+        let half = s.len() / 2;
+        let mut parts = 0u128;
 
-        let mut a: u64 = 0;
-        let mut b: u64 = 0;
-
-        for (i, x) in ALPHABET.chars().enumerate() {
-            if left.contains(&x) {
-                a |= 1 << i;
-            }
-
-            if right.contains(&x) {
-                b |= 1 << i;
+        for (score, a) in ALPHABET.chars().enumerate() {
+            for (i, c) in s.chars().enumerate() {
+                let bit = if a == c { 1 } else { 0 };
+                let shift = if i >= half { 64 } else { 0 };
+                parts |= bit << (score + shift);
             }
         }
 
-        Ok(Self(a, b))
+        Ok(Self((parts >> 64) as u64, parts as u64))
     }
 }
 
